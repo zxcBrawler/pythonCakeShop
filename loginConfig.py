@@ -16,7 +16,6 @@ def logIn():
                 print("Успешный вход")
                 return login
               
-                
             elif row[0] == 0 :
                 data = con.execute(f"select count(*) from admin where login='{login}' and password='{passwd}'")
                 for row in data:

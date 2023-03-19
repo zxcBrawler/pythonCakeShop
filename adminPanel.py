@@ -19,8 +19,6 @@ def getProductByID(id):
           for row in cur.fetchall():
                print(row)
 
-
-
 def updateQuantity(id, quantity):
     with con:
         cur.execute("SELECT price_product FROM storage where id = ?", (id,))
@@ -34,8 +32,3 @@ def updatePrice(id, price):
       with con:
         cur.execute("update storage set price_product =? where id=?",(price, id))
         con.commit()
-
-
-
-          
-        

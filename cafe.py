@@ -4,7 +4,6 @@ from databaseConfig import *
 from loginConfig import *
 from adminPanel import *
 from userPanel import *
-import ctypes
 
 def buyCake():
    with con:
@@ -133,22 +132,4 @@ match count:
         register()
     case _:
         print("dsdsd")
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 

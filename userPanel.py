@@ -47,10 +47,3 @@ def updateCardUser(id):
     if (int(getUserSpendings(id)) > 20000):
         cur.execute("update users set card_id = ? where id=?",(3,id,))
         con.commit()
-
-        
-
-
-
-           
-
