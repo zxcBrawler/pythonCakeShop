@@ -32,3 +32,9 @@ def updatePrice(id, price):
       with con:
         cur.execute("update storage set price_product =? where id=?",(price, id))
         con.commit()
+
+def getAdminBalance(id):
+    with con:
+        cur.execute("select balance from admin where id =?",(id,))
+        for row in cur.fetchall():
+            return int(row[0])

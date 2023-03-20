@@ -83,50 +83,54 @@ count = int(input())
 match count:
     case 1:
         login = logIn()
-        if (login == "admin"):
-            print(f"Добро пожаловать {login}. Что вы хотите сделать?: \n 1) Пополнить склад \n 2) Изменить цену \n 3) Просмотреть историю покупок пользователя \n 4) Вывести баланс")
+        while(True):
+            if (login == "admin"):
+                print(f"Добро пожаловать {login}. Что вы хотите сделать?: \n 1) Пополнить склад \n 2) Изменить цену \n 3) Просмотреть историю покупок пользователя \n 4) Вывести баланс")
 
-            count = int(input())
-            
-            match count:
-                case 1:
-                    showAllProducts()
-                    print("Введите id продукта")
-                    id = int(input())
-                    print("Введите количество продукта")
-                    quantity = int(input())
-                    updateQuantity(id,quantity)
-                case 2:
-                    showAllProducts()
-                    print("Введите id продукта")
-                    id = int(input())
-                    print("Введите новую цену продукта")
-                    price = int(input())
-                    updatePrice(id,price)
-                case 3:
-                    print("Введите логин пользователя")
-                    loginUser = input()
-                    showUserHistory(getUserId(loginUser))
-                case 4:
-                    print(getUserBalance(getUserId(login)))
-        else:
-            if (login != False):
-                print(f"Добро пожаловать {login}. Что вы хотите сделать?: \n 1) Купить торт \n 2) Просмотреть историю покупок \n 3) Вывести общую сумму расходов \n 4) Вывести баланс")
-                with con:
-                    cur.execute("update users set balance = balance + ? where id=?",(randint(200,400),getUserId(login),))
-                    con.commit()
                 count = int(input())
                 
                 match count:
                     case 1:
-                        buyCake()
+                        showAllProducts()
+                        print("Введите id продукта")
+                        id = int(input())
+                        print("Введите количество продукта")
+                        quantity = int(input())
+                        updateQuantity(id,quantity)
                     case 2:
-                        showUserHistory(getUserId(login))
-                        updateCardUser(getUserId(login))
+                        showAllProducts()
+                        print("Введите id продукта")
+                        id = int(input())
+                        print("Введите новую цену продукта")
+                        price = int(input())
+                        updatePrice(id,price)
                     case 3:
-                        print(getUserSpendings(getUserId(login)))
+                        print("Введите логин пользователя")
+                        loginUser = input()
+                        showUserHistory(getUserId(loginUser))
                     case 4:
-                        print(getUserBalance(getUserId(login)))
+                        print(getAdminBalance(1))
+                       
+            else:
+                with con:
+                        cur.execute("update users set balance = balance + ? where id=?",(randint(200,400),getUserId(login),))
+                        con.commit()
+                while(True):
+                    if (login != False):
+                        print(f"Добро пожаловать {login}. Что вы хотите сделать?: \n 1) Купить торт \n 2) Просмотреть историю покупок \n 3) Вывести общую сумму расходов \n 4) Вывести баланс")
+                        
+                        count = int(input())
+                        
+                        match count:
+                            case 1:
+                                buyCake()
+                            case 2:
+                                showUserHistory(getUserId(login))
+                                updateCardUser(getUserId(login))
+                            case 3:
+                                print(getUserSpendings(getUserId(login)))
+                            case 4:
+                                print(getUserBalance(getUserId(login)))
             
     case 2:
         register()
