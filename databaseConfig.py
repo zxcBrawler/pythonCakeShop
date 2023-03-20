@@ -13,7 +13,7 @@ def createTableUsers():
                         id INTEGER PRIMARY KEY AUTOINCREMENT,
                         login VARCHAR(50),
                         password VARCHAR(50),
-                        balance INTEGER NOT NULL,
+                        balance NUMERIC  NOT NULL,
                         card_id INTEGER NOT NULL,
                         FOREIGN KEY (card_id)
                         REFERENCES card (id)
@@ -31,7 +31,7 @@ def createTableAdmin():
                         id INTEGER PRIMARY KEY AUTOINCREMENT,
                         login VARCHAR(50),
                         password VARCHAR(50),
-                        balance INTEGER
+                        balance NUMERIC 
                         );
                     """)
                     sql = "INSERT INTO admin (login, password, balance) values(?, ?, ?)"
@@ -97,8 +97,6 @@ def createTableStorage():
                         data = [(item, randint(1, 15), randint(20, 250))]
                         with con:
                             con.executemany(sql, data)  
-
-
 
 cardList = [
     "Бронзовая карта",

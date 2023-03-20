@@ -27,9 +27,10 @@ def buyCake():
                     if (answer == 1):
                         with con:
                              
-                            if (total  >= getUserBalance(getUserId(login))):
+                            if (getUserBalance(getUserId(login)) <= 0):
                                 print("Вы больше не можете покупать так как недостаточно средств")
                                 
+                            
                             else:
                                 cur.execute("Select quantity_product from storage where id=?",(getIngredientId(str(i)),))
                                 for rows in cur.fetchall():
@@ -42,6 +43,8 @@ def buyCake():
                                         print(f"Вы добавили {i}")
                                         cur.execute("INSERT INTO cake (ingredient_id, cake_num, user_id, cockroach) values(?, ?, ?, ?)",(getIngredientId(str(i)),value,getUserId(login),cockroach,))
                                         cur.execute("update storage set quantity_product = quantity_product - 1 where id=?",(getIngredientId(str(i)),))
+                                        cur.execute("update users set balance=balance - ? where id=?",(getIngredientPrice(str(i)),getUserId(login)))
+
                                         con.commit()
                                         n += 1
                                     else:
@@ -53,6 +56,8 @@ def buyCake():
             cake += 1
         
        cur.execute("Select card_id from users where id=?",(getUserId(login),))
+    
+
        for r in cur.fetchall():
             if (int(r[0]) == 1):
                 total = total - (5.0 * total / 100.0)
@@ -63,7 +68,6 @@ def buyCake():
             if (cockroach == 5 and userFinds == 5):
                 total = total - (30.0 * total / 100.0)
 
-       cur.execute("update users set balance=? where id=?",((getUserBalance(getUserId(login)) - total),getUserId(login),))
        with con:
             cur.execute("SELECT name_product, cake_num, price_product FROM cake inner join storage on ingredient_id = storage.id where user_id =? and cake_num = ?",(getUserId(login),value))
             row = cur.fetchall()

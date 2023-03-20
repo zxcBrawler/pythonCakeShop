@@ -16,7 +16,11 @@ def getIngredientId(name_product):
         cur.execute("SELECT id FROM storage WHERE name_product =?",(name_product,))
         for row in cur.fetchall():
             return int(row[0])
-
+def getIngredientPrice(name_product):
+    with con:
+        cur.execute("SELECT price_product FROM storage WHERE name_product =?",(name_product,))
+        for row in cur.fetchall():
+            return int(row[0])
 def showUserHistory(id):
    with con:
         cur.execute("select name_card from users inner join card on card_id = card.id where users.id = ?",(id,))
